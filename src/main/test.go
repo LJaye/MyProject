@@ -7,6 +7,7 @@ import (
 	"fmt"
 )
 
+// 生成数据库密钥
 const PasswdEncodeKey = "kenc-wayne key 1"
 
 func DecodePassword(encodeBase64 string) (string, error) {
