@@ -38,7 +38,7 @@ func maxSubSum2(arr []int, n int) int {
 	return maxSubSum
 }
 
-// 分治 时间复杂度O(  )
+// 分治 时间复杂度O(nlogn) TODO
 //func maxSubSum3(arr []int, n int) int {
 //	maxSubSum := 0
 //
