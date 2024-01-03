@@ -71,6 +71,9 @@ func (l *LinkedList) Insert(x, i int) {
 	}
 	// 插入第一个位置特殊处理
 	if i == 0 {
+		if l.Head != nil {
+			p.Next = l.Head
+		}
 		l.Head = p
 	} else {
 		s := l.FindIndex(i - 1)
@@ -113,6 +116,7 @@ func main() {
 	list.Insert(2, 2)
 	list.Insert(6, 3)
 	list.Insert(7, 4)
+	list.Insert(1, 0)
 	list.Print()
 	fmt.Println(list.Find(3))
 	fmt.Println(list.FindIndex(0))

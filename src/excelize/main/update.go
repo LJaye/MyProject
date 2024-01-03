@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"github.com/xuri/excelize/v2"
+	"strconv"
 )
 
 func updateExcel() {
@@ -40,6 +41,28 @@ func updateExcel() {
 	if err != nil {
 		fmt.Println(err)
 	}
+
+	i := 11
+	nodes := []string{"fzct11", "ncct49", "xtun03", "zsct02"}
+	nodesPriceMap := map[string]float64{
+		"fzct11": 8.3,
+		"ncct49": 7,
+		"xtun03": 7,
+		"zsct02": 7.6,
+	}
+	nodesValueMap := map[string]float64{
+		"fzct11": 1573.41,
+		"ncct49": 3000.00,
+		"xtun03": 1155.36,
+		"zsct02": 5534.95,
+	}
+	for _, node := range nodes {
+		err = billTemplate.SetCellValue("账单", "I"+strconv.Itoa(i), nodesValueMap[node])
+		err = billTemplate.SetCellValue("账单", "J"+strconv.Itoa(i), nodesPriceMap[node])
+		i++
+	}
+
+	err = billTemplate.UpdateLinkedValue()
 
 	err = billTemplate.SaveAs("./src/excelize/NewNet.xlsx")
 	if err != nil {
