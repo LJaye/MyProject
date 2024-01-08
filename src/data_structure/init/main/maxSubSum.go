@@ -38,11 +38,53 @@ func maxSubSum2(arr []int, n int) int {
 	return maxSubSum
 }
 
-// 分治 时间复杂度O(nlogn) TODO
-//func maxSubSum3(arr []int, n int) int {
-//	maxSubSum := 0
-//
-//}
+// 分治 时间复杂度O(nlogn)
+func maxSubarraySum(nums []int, low, high int) int {
+	if low == high {
+		return nums[low]
+	}
+
+	mid := (low + high) / 2
+
+	// 分别求解左右两侧的最大子列和
+	leftMax := maxSubarraySum(nums, low, mid)
+	rightMax := maxSubarraySum(nums, mid+1, high)
+	crossMax := maxCrossingSum(nums, low, mid, high)
+
+	// 返回左右两侧以及跨越中点的最大子列和中的最大值
+	return max(leftMax, max(rightMax, crossMax))
+}
+
+// 求解跨越中点的最大子列和
+func maxCrossingSum(nums []int, low, mid, high int) int {
+	leftSum := 0
+	leftMaxSum := nums[mid]
+	for i := mid; i >= low; i-- {
+		leftSum += nums[i]
+		if leftSum > leftMaxSum {
+			leftMaxSum = leftSum
+		}
+	}
+
+	rightSum := 0
+	rightMaxSum := nums[mid+1]
+	for i := mid + 1; i <= high; i++ {
+		rightSum += nums[i]
+		if rightSum > rightMaxSum {
+			rightMaxSum = rightSum
+		}
+	}
+
+	return leftMaxSum + rightMaxSum
+}
+
+// 返回两个数中的最大值
+func max(a, b int) int {
+	if a > b {
+		return a
+	}
+	return b
+}
 
 // 在线处理 时间复杂度为O(n)
 func maxSubSum4(arr []int, n int) int {
@@ -59,7 +101,8 @@ func maxSubSum4(arr []int, n int) int {
 }
 
 func main() {
-	arr := []int{4, -3, 5, -2, -1, 2, 6, -2}
-	maxSum := maxSubSum4(arr, 8)
+	nums := []int{4, -3, 5, -2, -1, 2, 6, -2}
+	//maxSum := maxSubSum4(nums, 8)
+	maxSum := maxSubarraySum(nums, 0, len(nums)-1)
 	fmt.Println(maxSum)
 }

@@ -6,15 +6,16 @@ import (
 )
 
 func main() {
-	billTemplate, err := excelize.OpenFile("./src/excelize/KENC-202310.xlsx")
+	billTemplate, err := excelize.OpenFile("./src/excelize/Book1.xlsx")
 	if err != nil {
 		fmt.Println(err)
 	}
 
-	rows, err := billTemplate.GetRows("账号汇总")
+	rows, err := billTemplate.GetRows("Sheet1")
 	if err != nil {
 		fmt.Println(err)
 	}
+	fmt.Println(rows[len(rows)-1][len(rows[0])-2])
 
 	fmt.Println(rows)
 }
